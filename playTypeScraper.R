@@ -2,8 +2,8 @@ TeamPlayer = c("team","player")
 playTypeList = c("Transition","Isolation","PRBallHandler","PRRollMan","Postup",
                  "Spotup","Handoff","Cut","OffScreen","OffRebound")
 
-getPlayData <- function(PlayType){
-  URL = paste("http://stats.nba.com/js/data/playtype/player_",PlayType,".js", 
+getPlayData <-function(TmPlyr, PlayType, offDef){
+  URL = paste("http://stats.nba.com/js/data/playtype/",TmPlyr,"_",PlayType,".js", 
               sep = "")
   web_page <- readLines(URL)
   web_page <- web_page[7]
@@ -11,10 +11,31 @@ getPlayData <- function(PlayType){
   x2 <- gsub("[\\[]", "\n", x1, perl=TRUE)
   x3 <- gsub("\"rowSet\":\n", "", x2, perl=TRUE)
   x4 <- gsub(";", ",",x3, perl=TRUE)
-  x5 <- gsub(",\"name\":\"Offensive\"","",x4, perl = TRUE)
-  x6 <- paste(x5,",",sep = "")
-  playDat<-read.table(textConnection(x6), header=T, sep=",", skip=2, 
-                  stringsAsFactors=FALSE)
-  playDat <- playDat[,1:ncol(playDat)-1] #strip last column
-  return(playDat)
+  x5 <- strsplit(x4,'"headers"')
+  if (offDef == "Offense"){
+    x6 <- x5[[1]][2]
+    x7 <- gsub(",\"name\":\"Offensive\"","",x6, perl = TRUE)
+    playDat<-read.table(textConnection(x7), header=T, sep=",", skip=1, 
+                        stringsAsFactors=FALSE)
+    playDat <- playDat[,1:ncol(playDat)-1] #strip last column
+  } else if (offDef == "Defense" & TmPlyr == "player"){
+    x6 <- x5[[1]][3]
+    x7 <- gsub(",\"name\":\"Deffensive\"","",x6, perl = TRUE)
+    x8 <- paste(x7,",",sep = "")
+    playDat<-read.table(textConnection(x8), header=T, sep=",", skip=1, 
+                        stringsAsFactors=FALSE)
+    playDat <- playDat[,1:ncol(playDat)-1] #strip last column
+  } else if (offDef == "Defense" & TmPlyr == "team"){
+    x6 <- x5[[1]][3]
+    x7 <- gsub(",\"name\":\"Defensive\"","",x6, perl = TRUE)
+    x8 <- paste(x7,",",sep = "")
+    playDat<-read.table(textConnection(x8), header=T, sep=",", skip=1, 
+                        stringsAsFactors=FALSE)
+    playDat <- playDat[,1:ncol(playDat)-1] #strip last column
   }
+  return(playDat)
+}
+tmPostOff <- playtypdata2("team","Postup","Offense")
+tmPostDef <- playtypdata2("team","Postup","Defense")
+plyrPostOff <- playtypdata2("player","Postup","Offense")
+plyrPostDef <- playtypdata2("player","Postup","Defense")

@@ -26,7 +26,8 @@ teamIdDf <- unique(
   subset(idDf,TEAM_ID>0, select = TEAM_ID:TEAM_CODE)
   )
 
-getShotData <- function(player){
+getShotData <- function(playerName){
+  player = 
   shotURL = paste("http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS=&",
                   "ContextFilter=&",
                   "ContextMeasure=FGA&DateFrom=&DateTo=&GameID=&GameSegment=&LastNGames=0&",
@@ -64,3 +65,6 @@ plotShotChart = function(playerShotData){
       aes(colour = EVENT_TYPE)
     )
 }
+
+#Using James Harden as an example.
+

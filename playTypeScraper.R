@@ -39,3 +39,33 @@ tmPostOff <- playtypdata2("team","Postup","Offense")
 tmPostDef <- playtypdata2("team","Postup","Defense")
 plyrPostOff <- playtypdata2("player","Postup","Offense")
 plyrPostDef <- playtypdata2("player","Postup","Defense")
+
+getPlayTypeData <- function(TmPlyr, PlayTpe, OffenseDefense){
+  URL = paste("http://stats.nba.com/js/data/playtype/",TmPlyr,"_",PlayTpe,".js", 
+              sep = "")
+  df = fromJSON(readLines(URL)[7])
+  if(OffenseDefense == "Offense"){
+    off = as.data.frame(
+      matrix(
+        unlist(df$resultSets[[1]][[3]]),
+        ncol=31, byrow = TRUE)
+    )
+    dat = off
+    colnames(dat) = dat$resultSets[[1]][[1]]
+    
+  }
+  else if (OffenseDefense =="Defense"){
+    def = data.frame(
+      matrix(
+        unlist(df$resultSets[[2]][[3]]),
+        ncol=31, byrow = TRUE)
+    )
+    dat = def
+    colnames(dat) = dat$resultSets[[2]][[1]]
+  }
+
+  #set column names
+
+  return(dat)
+}
+f = getPlayTypeData("team", "Spotup", "Defense")

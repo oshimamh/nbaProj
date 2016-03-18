@@ -1,9 +1,9 @@
-TeamPlayer = c("team","player")
-playTypeList = c("Transition","Isolation","PRBallHandler","PRRollMan","Postup",
+TeamPlayer <- c("team","player")
+playTypeList <- c("Transition","Isolation","PRBallHandler","PRRollMan","Postup",
                  "Spotup","Handoff","Cut","OffScreen","OffRebound")
 
 getPlayData <-function(TmPlyr, PlayType, offDef){
-  URL = paste("http://stats.nba.com/js/data/playtype/",TmPlyr,"_",PlayType,".js", 
+  URL <- paste("http://stats.nba.com/js/data/playtype/",TmPlyr,"_",PlayType,".js", 
               sep = "")
   web_page <- readLines(URL)
   web_page <- web_page[7]

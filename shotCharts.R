@@ -25,8 +25,8 @@ invlogit <- function(x){
 #use a binomial glm to model the probability of James Harden making a shot 
 #based on the x and y coordinates of the shot location.
 
-hardenData = getShotData("James Harden")
-hardenMod1 = glm(EVENT_TYPE~LOC_X+LOC_Y-1, data = hardenData, family = binomial)
+hardenData <- getShotData("James Harden")
+hardenMod1 <- glm(EVENT_TYPE~LOC_X+LOC_Y-1, data = hardenData, family = binomial)
 summary(hardenMod1)
 coefplot(hardenMod1, trans = invlogit, title = "Probability of a Made Shot")
 
@@ -47,7 +47,8 @@ densityShotChart <- function(player){
       ylim(-50,420)+
       geom_point(aes(color = PROB)) +
       scale_color_gradient(low="yellow",high="red")+
-      stat_density2d(geom = "polygon", n=200, aes(fill=..level.., alpha = 1/2))
+      stat_density2d(geom = "polygon", n=200, 
+                     aes(fill=..level.., alpha = 1/2))
   return(shotChart)
 }
 

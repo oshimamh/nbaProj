@@ -31,8 +31,8 @@ teamIdDf <- unique(
 
 getShotData <- function(playerID){
   
-  ndx = which(idDf$DISPLAY_FIRST_LAST %in% playerID)
-  player = idDf[ndx,1]
+  ndx <- which(idDf$DISPLAY_FIRST_LAST %in% playerID)
+  player <- idDf[ndx,1]
   
   shotURL <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS=&",
                    "ContextFilter=&",
@@ -59,18 +59,18 @@ getShotData <- function(playerID){
   shotDataf$LOC_Y <- as.numeric(
     as.character(shotDataf$LOC_Y)
   )
-  shotDataf$SHOT_DISTANCE = as.numeric(
+  shotDataf$SHOT_DISTANCE <- as.numeric(
     as.character(shotDataf$SHOT_DISTANCE)
   )
   return(shotDataf)
   #  shotDataf = as.data.frame(shotDataf)
 }
 
-getRoster = function(teamAbbr){
-  tmNdx = which(teamIdDf$TEAM_ABBREVIATION %in% teamAbbr)
-  teamId = teamIdDf[tmNdx,1]
-  plNdx = which(idDf$TEAM_ID %in% teamId)
-  roster = idDf[plNdx,3]
+getRoster <- function(teamAbbr){
+  tmNdx <- which(teamIdDf$TEAM_ABBREVIATION %in% teamAbbr)
+  teamId <- teamIdDf[tmNdx,1]
+  plNdx <- which(idDf$TEAM_ID %in% teamId)
+  roster <- idDf[plNdx,3]
   return(roster)
 }
 

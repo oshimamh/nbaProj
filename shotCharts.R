@@ -42,7 +42,7 @@ shotModelFit <- function(player){
 densityShotChart <- function(player){
   df <- shotModelFit(player)
   shotChart <- ggplot(data = df, aes(x=LOC_X, y=LOC_Y, z=PROB)) + 
-    xlim(-270,270)+
+    xlim(-250,250)+
     ylim(0,400)+
     geom_point(aes(color = PROB)) +
     geom_density2d()+

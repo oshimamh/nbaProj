@@ -1,6 +1,9 @@
 library(ggplot2)
 library(nlme)
 library(coefplot)
+library(ggmap)
+library(png)
+library(rjson)
 
 basicShotChart <- function(playerShotData){
   shotChart <- ggplot(playerShotData,
@@ -40,12 +43,25 @@ shotModelFit <- function(player){
   return(prdct)
 }
 densityShotChart <- function(player){
+  img <- readPNG("nba_court.png")
+  g <- rasterGrob(img, interpolate=TRUE)
   df <- shotModelFit(player)
   shotChart <- ggplot(data = df, aes(x=LOC_X, y=LOC_Y, z=PROB)) + 
-    xlim(-250,250)+
-    ylim(0,400)+
-    geom_point(aes(color = PROB)) +
-    geom_density2d()+
-    scale_color_gradient(low="blue",high="red")
+#      annotation_custom(g, -250, 250, -50, 420)+
+      annotation_custom(g)+
+      xlim(-250,250)+
+      ylim(-50,420)+
+      stat_density2d(geom = "polygon", n=200, aes(fill=..level.., alpha = 1/2))+
+      geom_point(aes(color = PROB, alpha = 1/2)) +
+      scale_color_gradient(low="yellow",high="red")
   return(shotChart)
 }
+
+#ggplot(shotDataf, aes(x=LOC_X, y=LOC_Y)) + 
+densityShotChart("Stephen Curry")
+
+courtImgURL <- "https://thedatagame.files.wordpress.com/2016/03/nba_court.jpg"
+grid.raster(readJPEG(getURLContent(courtImgURL)))
+
+img <- readPNG("nba_court.png")
+g <- rasterGrob(img, interpolate=TRUE)

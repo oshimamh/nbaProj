@@ -9,6 +9,7 @@ library(RColorBrewer)
 library(boot)
 library(rpart)
 library(rpart.plot)
+library(png)
 
 ## create a list of all players and teams in the NBA from 2001-2016
 idURL <- paste("http://stats.nba.com/stats/commonallplayers?",
@@ -22,7 +23,6 @@ idDf<- data.frame(
     ncol = 13,byrow = TRUE),
   stringsAsFactors = FALSE)
 colnames(idDf)<- idData$resultSets[[1]][[2]]
-head(idDf)
 
 #extract team IDs
 teamIdDf <- unique(
@@ -65,15 +65,7 @@ getShotData <- function(playerID){
   return(shotDataf)
   #  shotDataf = as.data.frame(shotDataf)
 }
-plotShotChart <- function(playerShotData){
-  shotChart <- ggplot(playerShotData,
-                      aes(x=LOC_X, y=LOC_Y)
-  ) +
-    geom_point(
-      aes(colour = EVENT_TYPE)
-    )
-  return(shotChart)
-}
+
 getRoster = function(teamAbbr){
   tmNdx = which(teamIdDf$TEAM_ABBREVIATION %in% teamAbbr)
   teamId = teamIdDf[tmNdx,1]
@@ -82,12 +74,13 @@ getRoster = function(teamAbbr){
   return(roster)
 }
 
-getTeamShooting = function(team){
-  teamShotData = NULL
-  ros = getRoster(team)
+getTeamShooting <- function(team){
+  teamShotData <- NULL
+  ros <- getRoster(team)
   for (i in 1:length(ros)){
-    playerShot = getShotData(ros[i])
-    teamShotData = rbind(teamShotData, playerShot)
+    playerShot <- getShotData(ros[i])
+    teamShotData <- rbind(teamShotData, playerShot)
   }
   return(teamShotData)
 }
+

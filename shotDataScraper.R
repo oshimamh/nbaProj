@@ -5,7 +5,6 @@ library(gstat)
 library(nlme)
 library(coefplot)
 library(rgeos)
-library(RColorBrewer)
 library(boot)
 library(rpart)
 library(rpart.plot)
@@ -29,9 +28,9 @@ teamIdDf <- unique(
   subset(idDf,TEAM_ID>0, select = TEAM_ID:TEAM_CODE)
 )
 
-getShotData <- function(playerID){
-  
-  ndx <- which(idDf$DISPLAY_FIRST_LAST %in% playerID)
+getShotData <- function(playerName){
+
+  ndx <- which(idDf$DISPLAY_FIRST_LAST %in% playerName)
   player <- idDf[ndx,1]
   
   shotURL <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS=&",

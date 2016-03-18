@@ -16,7 +16,7 @@ basicShotChart <- function(playerName){
   return(shotChart)
 }
 
-basicShotChart("Klay Thompson")
+klayBasic <- basicShotChart("Klay Thompson")
 
 invlogit <- function(x){
   1/(1+exp(-x))
@@ -52,4 +52,6 @@ densityShotChart <- function(player){
   return(shotChart)
 }
 
-densityShotChart("Klay Thompson")
+klayDens <- densityShotChart("Klay Thompson")
+ggsave(klayDens, file = "klayDens.png")
+ggsave(klayBasic, file = "klayBasic.png")

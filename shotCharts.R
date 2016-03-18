@@ -38,11 +38,11 @@ shotModelFit <- function(player){
   return(prdct)
 }
 densityShotChart <- function(player){
-  img <- readPNG("nba_court.png")
-  g <- rasterGrob(img, interpolate=TRUE)
+#  img <- readPNG("nba_court.png")
+#  g <- rasterGrob(img, interpolate=TRUE)
   df <- shotModelFit(player)
   shotChart <- ggplot(data = df, aes(x=LOC_X, y=LOC_Y, z=PROB)) + 
-      annotation_custom(g, -275, 275, -35, 420)+
+#      annotation_custom(g, -275, 275, -35, 420)+
       xlim(-250,250)+
       ylim(-50,420)+
       geom_point(aes(color = PROB)) +

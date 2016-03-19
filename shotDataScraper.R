@@ -17,9 +17,7 @@ idURL <- paste("http://stats.nba.com/stats/commonallplayers?",
 
 idData <- fromJSON(file = idURL, method="C")
 idDf<- data.frame(
-  matrix(
-    unlist(idData$resultSets[[1]][[3]]),
-    ncol = 13,byrow = TRUE),
+  matrix(unlist(idData$resultSets[[1]][[3]]), ncol = 13,byrow = TRUE),
   stringsAsFactors = FALSE)
 colnames(idDf)<- idData$resultSets[[1]][[2]]
 
@@ -33,9 +31,9 @@ getShotData <- function(playerName){
   ndx <- which(idDf$DISPLAY_FIRST_LAST %in% playerName)
   player <- idDf[ndx,1]
   
-  shotURL <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS=&",
-                   "ContextFilter=&",
-                   "ContextMeasure=FGA&DateFrom=&DateTo=&GameID=&GameSegment=&LastNGames=0&",
+  shotURL <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS","
+                   =&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&",
+                   "GameID=&GameSegment=&LastNGames=0&",
                    "LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&",
                    "Period=0&Position=&RookieYear=&SeasonSegment=&",
                    "SeasonType=Regular+Season&TeamID=0&VsConference=&",
@@ -45,8 +43,7 @@ getShotData <- function(playerName){
                    sep = "")
   shotData <- fromJSON(file = shotURL, method="C")
   shotDataf <- data.frame(
-    matrix(
-      unlist(shotData$resultSets[[1]][[3]]),
+    matrix(unlist(shotData$resultSets[[1]][[3]]),
       ncol=21, byrow = TRUE)
   )
   #set column names

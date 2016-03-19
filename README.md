@@ -51,9 +51,12 @@ This function accepts a player's name as a string in the form of "FirstName Last
 
 *Example*
 ```
-# plot shot chart of Draymond Green
-dray <- basicShotChart("Draymond Green")
+# plot shot chart of Klay Thompson
+klayBasic <- basicShotChart("Klay Thompson")
 ```
+
+![alt tag](https://raw.githubusercontent.com/oshimamh/nbaProj/master/klayBasic.png)
+
 
 __shotModelFit(player)__
 
@@ -75,4 +78,5 @@ This function accepts a player's name as a string in the form of "FirstName Last
 # plot shot chart of Klay Thompson with density contours
 klayDens <- densityShotChart("Klay Thompson")
 ```
+![alt tag](https://raw.githubusercontent.com/oshimamh/nbaProj/master/klayDens.png)
 

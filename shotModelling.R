@@ -33,17 +33,20 @@ for (i in 1:length(YCOORD)){
 attempt[is.na(attempt)] <- 0
 
 densMat = NULL
-densMat$yCoord = YCOORD
-densMat$xCoord = XCOORD
+densMat$LOC_Y = YCOORD
+densMat$LOC_X = XCOORD
 densMat$attempt = attempt
 densMat = as.data.frame(densMat)
-densMat$yCoord = densMat$yCoord - 51
-densMat$xCoord = densMat$xCoord - 251
+densMat$LOC_Y = densMat$LOC_Y - 51
+densMat$LOC_X = densMat$LOC_X - 251
 
-attemptMod <- lm(attempt ~ xCoord + yCoord, data = densMat)
-klayShotMake <- shotModelFit("Klay Thompson")
+attemptMod <- lm(attempt ~ LOC_X + LOC_Y, data = densMat)
+mod <- glm(SHOT_MADE_FLAG ~ LOC_X + LOC_Y, 
+           data = klay, 
+           family = binomial)
 
-klayShotModel <- attemptMod
+klayShotModel <- densMat
+klayShotModel$Prediction <- predict(mod, newdata = klayShotModel)
 
 head(klayShotModel)
 

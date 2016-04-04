@@ -83,5 +83,6 @@ klayDens <- densityShotChart("Klay Thompson")
 #shotModelling.R
 This script uses the data gathered from running 'getShotData("Klay Thompson")' to model the probability of a shot being attempted at a specific location as well as the shot being made. In other words the probability of the shot attempted * the probability of the shot made at that location. 
 
-*Some of this code takes a long time to run*
+_Some of this code takes a long time to run_
+
 creating the bins ('bins = over(court, shots)') and the for loops that converts the matrix to (x,y) coordinates takes a long time. Could possibly be made more efficient with more work. 

@@ -80,3 +80,5 @@ klayDens <- densityShotChart("Klay Thompson")
 ```
 ![alt tag](https://raw.githubusercontent.com/oshimamh/nbaProj/master/klayDens.png)
 
+#shotModelling.R
+This script uses the data gathered from running 'getShotData("Klay Thompson")' to model the probability of a shot being attempted at a specific location as well as the shot being made. In other words the probability of the shot attempted * the probability of the shot made at that location. 

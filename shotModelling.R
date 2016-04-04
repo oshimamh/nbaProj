@@ -46,10 +46,9 @@ mod <- glm(SHOT_MADE_FLAG ~ LOC_X + LOC_Y,
            family = binomial)
 
 klayShotModel <- densMat
-klayShotModel$Prediction <- predict(mod, newdata = klayShotModel)
+klayShotModel$shotMakePrediction <- predict(mod, newdata = klayShotModel)
+klayShotModel$shotAtmptPrediction <- predict(attemptMod, newdata = klayShotModel)
+
+klayShotModel$shotPrediction <- klayShotModel$shotMakePrediction * klayShotModel$shotAtmptPrediction
 
 head(klayShotModel)
-
-
-
-head(klay)

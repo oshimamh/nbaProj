@@ -34,7 +34,7 @@ coefplot(hardenMod1, trans = invlogit, title = "Probability of a Made Shot")
 
 shotModelFit <- function(player){
   df <- getShotData(player)
-  mod <- glm(SHOT_MADE_FLAG~LOC_X+LOC_Y-1, 
+  mod <- glm(SHOT_MADE_FLAG ~ LOC_X + LOC_Y, 
              data = df, 
              family = binomial)
   prdct <- df[,c("LOC_X","LOC_Y")]
@@ -46,12 +46,15 @@ densityShotChart <- function(player){
   shotChart <- ggplot(data = df, aes(x=LOC_X, y=LOC_Y, z=PROB)) + 
       xlim(-250,250)+
       ylim(-50,420)+
+#      geom_bin2d(bins = 20)+
       geom_point(aes(color = PROB)) +
       scale_color_gradient(low="yellow",high="red")+
-      stat_density2d(geom = "polygon", n=200, aes(fill=..level.., alpha = 1/2))
+      stat_density2d(geom = "polygon", n=15, aes(fill=..level..))+
+      geom_point(aes(color = PROB))
   return(shotChart)
 }
 
 klayDens <- densityShotChart("Klay Thompson")
+klayDens
 ggsave(klayDens, file = "klayDens.png")
 ggsave(klayBasic, file = "klayBasic.png")

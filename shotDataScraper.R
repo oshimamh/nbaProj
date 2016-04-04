@@ -31,14 +31,13 @@ getShotData <- function(playerName){
   ndx <- which(idDf$DISPLAY_FIRST_LAST %in% playerName)
   player <- idDf[ndx,1]
   
-  shotURL <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS","
-                   =&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&",
+  shotURL <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=&CFPARAMS",
+                   "=&ContextFilter=&ContextMeasure=FGA&DateFrom=&DateTo=&",
                    "GameID=&GameSegment=&LastNGames=0&",
                    "LeagueID=00&Location=&Month=0&OpponentTeamID=0&Outcome=&",
                    "Period=0&Position=&RookieYear=&SeasonSegment=&",
                    "SeasonType=Regular+Season&TeamID=0&VsConference=&",
-                   "VsDivision=&",
-                   "PlayerID=",player,
+                   "VsDivision=&PlayerID=",player,
                    "&Season=2015-16",
                    sep = "")
   shotData <- fromJSON(file = shotURL, method="C")

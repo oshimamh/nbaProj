@@ -42,3 +42,5 @@ tmPostOff <- getPlayData("team","Postup","Offense")
 tmPostDef <- getPlayData("team","Postup","Defense")
 plyrPostOff <- getPlayData("player","Postup","Offense")
 plyrPostDef <- getPlayData("player","Postup","Defense")
+
+plyrPrOff <- getPlayData("player", "PRBallHandler", "Offense")

@@ -1,16 +1,11 @@
 library(ggplot2)
 library(nlme)
-library(coefplot)
-library(ggmap)
-library(png)
-library(rjson)
-library(grid)
-library(gridExtra)
 
 basicShotChart <- function(playerName){
   df <- getShotData(playerName)
   shotChart <- ggplot(df,aes(x=LOC_X, y=LOC_Y)) +
-    geom_point(aes(colour = EVENT_TYPE))+
+    geom_point(aes(colour = EVENT_TYPE), size = 1)+
+    geom_point(aes(x = mean(LOC_X), y = mean(LOC_Y)), size = 2)+
     xlim(-250,250)+
     ylim(-50,420)
   return(shotChart)
@@ -18,43 +13,25 @@ basicShotChart <- function(playerName){
 
 klayBasic <- basicShotChart("Klay Thompson")
 
-invlogit <- function(x){
-  1/(1+exp(-x))
-}
-
-#use a binomial glm to model the probability of James Harden making a shot 
-#based on the x and y coordinates of the shot location.
-
-hardenData <- getShotData("James Harden")
-hardenMod1 <- glm(EVENT_TYPE~LOC_X+LOC_Y-1, 
-                  data = hardenData, 
-                  family = binomial)
-summary(hardenMod1)
-coefplot(hardenMod1, trans = invlogit, title = "Probability of a Made Shot")
-
 shotModelFit <- function(player){
   df <- getShotData(player)
   mod <- glm(SHOT_MADE_FLAG ~ LOC_X + LOC_Y, 
              data = df, 
              family = binomial)
   prdct <- df[,c("LOC_X","LOC_Y")]
-  prdct$PROB <- predict(mod, newdata = prdct)
-  return(prdct)
+  df$PROB <- predict(mod, newdata = prdct)
+  return(df)
 }
 densityShotChart <- function(player){
   df <- shotModelFit(player)
   shotChart <- ggplot(data = df, aes(x=LOC_X, y=LOC_Y, z=PROB)) + 
       xlim(-250,250)+
       ylim(-50,420)+
-#      geom_bin2d(bins = 20)+
-      geom_point(aes(color = PROB)) +
+      geom_point(aes(color = PROB), alpha = 1/2 ) +
       scale_color_gradient(low="yellow",high="red")+
-      stat_density2d(geom = "polygon", n=15, aes(fill=..level..))+
-      geom_point(aes(color = PROB))
+      stat_density2d(geom = "polygon", n=20, aes(fill=..level..))+
+      geom_point(aes(color = PROB), alpha = 1/2)
   return(shotChart)
 }
 
 klayDens <- densityShotChart("Klay Thompson")
-klayDens
-ggsave(klayDens, file = "klayDens.png")
-ggsave(klayBasic, file = "klayBasic.png")

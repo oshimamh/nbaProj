@@ -1,14 +1,7 @@
 library(rjson)
 library(ggplot2)
-library(hexbin)
-library(gstat)
 library(nlme)
-library(coefplot)
-library(rgeos)
-library(boot)
-library(rpart)
-library(rpart.plot)
-library(png)
+
 
 ## create a list of all players and teams in the NBA from 2001-2016
 idURL <- paste("http://stats.nba.com/stats/commonallplayers?",
@@ -57,8 +50,13 @@ getShotData <- function(playerName){
   shotDataf$SHOT_DISTANCE <- as.numeric(
     as.character(shotDataf$SHOT_DISTANCE)
   )
+  shotDataf$MINUTES_REMAINING <- as.numeric(
+    as.character(shotDataf$MINUTES_REMAINING)
+  )
+  shotDataf$SECONDS_REMAINING <- as.numeric(
+    as.character(shotDataf$SECONDS_REMAINING)
+  )
   return(shotDataf)
-  #  shotDataf = as.data.frame(shotDataf)
 }
 
 getRoster <- function(teamAbbr){

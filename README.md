@@ -39,6 +39,9 @@ This function accepts a team's three character abbreviation as a string and retu
 # fetch team shooting data for the Golden State Warriors
 gswShooting <- getTeamShooting("GSW")
 ```
+__getCentroids(player)__
+
+This function finds the mean locations of a players shot attempts and makes in six zones of the scoring area.
 
 # shotCharts.R
 *MUST HAVE getShotData FUNCTION LOADED FOR THESE FUNCTIONS TO OPERATE PROPERLY*
@@ -76,15 +79,17 @@ This function accepts a player's name as a string in the form of "FirstName Last
 *Example*
 ```
 # plot shot chart of Klay Thompson with density contours
-klayDens <- densityShotChart("Klay Thompson")
+densityShotChart("Klay Thompson")
 ```
 ![alt tag](https://raw.githubusercontent.com/oshimamh/nbaProj/master/klayDens.png)
 
-#shotModelling.R
-This script uses the data gathered from running 
-```klay <- getShotData("Klay Thompson")```
-to model the probability of a shot being attempted at a specific location as well as the shot being made. In other words the probability of the shot attempted * the probability of the shot made at that location. 
+__centroidChart(player)__
 
-__Some of this code takes a long time to run__
+This function accepts a player's name as a string in the form of "FirstName LastName" and returns the density shot chart with added centroid points. The green points represents the player's centroids of shot attempts. The pink points represents the player's centroids of made shots. 
 
-creating the bins (```bins = over(court, shots)```) and the for loops that converts the matrix to (x,y) coordinates takes a long time. Could possibly be made more efficient with more work. 
+*Example*
+```
+#plot DWyane Wade's shot chart with centroid points
+centroidChart("Dwyane Wade")
+```
+![alt tag](https://github.com/oshimamh/nbaProj/blob/master/dWadeCent.png)

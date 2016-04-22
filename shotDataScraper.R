@@ -1,6 +1,6 @@
-library(rjson)
-library(ggplot2)
-library(nlme)
+require(rjson)
+require(ggplot2)
+require(nlme)
 
 
 ## create a list of all players and teams in the NBA from 2001-2016
@@ -56,6 +56,7 @@ getShotData <- function(playerName){
   shotDataf$SECONDS_REMAINING <- as.numeric(
     as.character(shotDataf$SECONDS_REMAINING)
   )
+  shotDataf[which(shotDataf$LOC_X >= -250 & shotDataf$LOC_X <= 250 & shotDataf$LOC_Y >= -50 & shotDataf$LOC_Y <= 420),]
   return(shotDataf)
 }
 
@@ -77,3 +78,26 @@ getTeamShooting <- function(team){
   return(teamShotData)
 }
 
+getCentroids <- function(player){
+  df <- getShotData(player)
+  
+  paintShots = df[which(df$LOC_X <= 100 & df$LOC_X >= -100 & df$LOC_Y <= 100),]
+  lCornerShots = df[which(df$LOC_X <= -100 & df$LOC_Y <= 100),]
+  rCornerShots = df[which(df$LOC_X >= 100 & df$LOC_Y <= 100),]
+  topArchShots = df[which(df$LOC_X <= 100 & df$LOC_X >= -100 & df$LOC_Y >= 100),]
+  lArchShots = df[which(df$LOC_X <= -100 & df$LOC_Y >= 100),]
+  rArchShots = df[which(df$LOC_X >= 100 & df$LOC_Y >= 100),]
+  
+  meanPaint = c(mean(paintShots$LOC_X), mean(paintShots$LOC_Y), mean(paintShots$LOC_X[which(paintShots$SHOT_MADE_FLAG == 1)]), mean(paintShots$LOC_Y[which(paintShots$SHOT_MADE_FLAG == 1)]))
+  meanLCorner = c(mean(lCornerShots$LOC_X), mean(lCornerShots$LOC_Y), mean(lCornerShots$LOC_X[which(lCornerShots$SHOT_MADE_FLAG == 1)]), mean(lCornerShots$LOC_Y[which(lCornerShots$SHOT_MADE_FLAG == 1)]))
+  meanRCorner= c(mean(rCornerShots$LOC_X), mean(rCornerShots$LOC_Y), mean(rCornerShots$LOC_X[which(rCornerShots$SHOT_MADE_FLAG == 1)]), mean(rCornerShots$LOC_Y[which(rCornerShots$SHOT_MADE_FLAG == 1)]))
+  meanTopArch = c(mean(topArchShots$LOC_X), mean(topArchShots$LOC_Y), mean(topArchShots$LOC_X[which(topArchShots$SHOT_MADE_FLAG == 1)]), mean(topArchShots$LOC_Y[which(topArchShots$SHOT_MADE_FLAG == 1)]))
+  meanLArch = c(mean(lArchShots$LOC_X), mean(lArchShots$LOC_Y), mean(lArchShots$LOC_X[which(lArchShots$SHOT_MADE_FLAG == 1)]), mean(lArchShots$LOC_Y[which(lArchShots$SHOT_MADE_FLAG == 1)]))
+  meanRArch = c(mean(rArchShots$LOC_X), mean(rArchShots$LOC_Y), mean(rArchShots$LOC_X[which(rArchShots$SHOT_MADE_FLAG == 1)]), mean(rArchShots$LOC_Y[which(rArchShots$SHOT_MADE_FLAG == 1)]))
+  
+  centroids = as.data.frame(rbind(meanPaint, meanLCorner, meanRCorner, meanLArch, meanRArch, meanTopArch))
+  colnames(centroids) = c("AttemptX", "AttemptY", "MakeX", "MakeY")
+  
+  return(centroids)
+  
+}

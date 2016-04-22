@@ -1,3 +1,5 @@
+require(rjson)
+
 TeamPlayer <- c("team","player")
 playTypeList <- c("Transition","Isolation","PRBallHandler","PRRollMan","Postup",
                  "Spotup","Handoff","Cut","OffScreen","OffRebound")

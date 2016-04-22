@@ -99,7 +99,7 @@ This R script file contains a function to scrape play type data from NBA.com
 
 __getPlayData(TmPlyr, PlayType, offDef)__
 
-This function scrapes play type data from NBA.com. It requires three inputs from the user. The user must first specify "team" or "player". "team" will return the statitics for each NBA team as a whole while "player" returns statistics for each player in the league. Then the user must specify the type of play. There are ten possible inputs for this variable: "Transition", "Isolation", "PRBallHandler", "PRRollMan", "Postup", "Spotup", "Handoff", "Cut", "OffScreen", and "OffRebound". Finally the user chooses whether they wish to gather either offensive or defensive statistics. 
+This function scrapes play type data from NBA.com. It requires three inputs from the user. The user must first specify "team" or "player". "team" will return the statitics for each NBA team as a whole while "player" returns statistics for each player in the league. Then the user must specify the type of play. There are ten possible inputs for this variable: "Transition", "Isolation", "PRBallHandler", "PRRollMan", "Postup", "Spotup", "Handoff", "Cut", "OffScreen", and "OffRebound". Finally the user chooses whether they wish to gather either "Offense" or "Defense" statistics. 
 
 *Example*
 ```

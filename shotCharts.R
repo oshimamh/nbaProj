@@ -37,7 +37,7 @@ densityShotChart <- function(player){
   return(shotChart)
 }
 
-densCentChart <- function(player){
+centroidChart <- function(player){
   df <- shotModelFit(player)
   cent <- getCentroids(player)
   shotChart <- ggplot() + 
@@ -53,4 +53,4 @@ densCentChart <- function(player){
   return(shotChart)
 }
 
-densCentChart("Dwyane Wade")
+

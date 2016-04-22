@@ -85,6 +85,8 @@ densityShotChart("Klay Thompson")
 
 __centroidChart(player)__
 
+__This chart is still being developed__
+
 This function accepts a player's name as a string in the form of "FirstName LastName" and returns the density shot chart with added centroid points. The green points represents the player's centroids of shot attempts. The pink points represents the player's centroids of made shots. 
 
 *Example*
